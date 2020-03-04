@@ -143,7 +143,7 @@ class WebHookController extends Controller{
                 if(strlen($event->message->text) < 30){
                     
                 $message =  new TextMessageBuilder("Maaf pesan yang dapat dideteksi harus memiliki panjang karakter minimal 30");
-                    
+                $response = $this->bot->replyMessage($event->replyToken, $message);
                 }else{
                     $klasifikasi = $this->callML($event->message->text);
                     $message = $this->generateResultClasifier($klasifikasi);
