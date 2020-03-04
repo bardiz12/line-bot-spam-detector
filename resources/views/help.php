@@ -13,3 +13,6 @@ untuk mengaktifkan bot, ketik : *aktifkan*
 
 Matikan BOT
 untuk menonaktifkan bot, ketik : *nonaktifkan*
+
+Tentang pembuat
+ketik *about* untuk mengenal pembuat bot ini
