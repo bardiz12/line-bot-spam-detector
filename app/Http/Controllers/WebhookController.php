@@ -142,15 +142,17 @@ class WebHookController extends Controller{
             if($user->active){
                 if(strlen($event->message->text) < 30){
                     
-                    return new TextMessageBuilder("Maaf pesan yang dapat dideteksi harus memiliki panjang karakter minimal 30");
+                $message =  new TextMessageBuilder("Maaf pesan yang dapat dideteksi harus memiliki panjang karakter minimal 30");
                     
+                }else{
+                    $klasifikasi = $this->callML($event->message->text);
+                    $message = $this->generateResultClasifier($klasifikasi);
+                    $response = $this->bot->replyMessage($event->replyToken, $message);
+                    error_log(print_r($response, true));
+                    Log::info("resp " . json_encode($response, JSON_PRETTY_PRINT));
                 }
 
-                $klasifikasi = $this->callML($event->message->text);
-                $message = $this->generateResultClasifier($klasifikasi);
-                $response = $this->bot->replyMessage($event->replyToken, $message);
-                error_log(print_r($response, true));
-                Log::info("resp " . json_encode($response, JSON_PRETTY_PRINT));
+                
             }else{
                 $message = new TextMessageBuilder("Kamu dalam status nonaktif. bot tidak akan memeriksa pesan yang kamu kirimkan apabila dalam status nonaktif");
                 $this->bot->replyMessage($event->replyToken, $message);
